@@ -1,0 +1,29 @@
+[{
+        "id": "cat-amplifiers",
+        "name": "Amplifiers",
+        "description": "Gadgets, audio, and tech accessories",
+        "image": "/images/cat-electronics.jpg",
+        "productCount": 2
+    },
+    {
+        "id": "cat-speakers",
+        "name": "Speakers",
+        "description": "Apparel and everyday wear",
+        "image": "/images/cat-clothing.jpg",
+        "productCount": 1
+    },
+    {
+        "id": "cat-subwoofers",
+        "name": "Subwoofers",
+        "description": "Shoes and sneakers",
+        "image": "/images/cat-footwear.jpg",
+        "productCount": 1
+    },
+    {
+        "id": "cat-infotainment-systems",
+        "name": "Infotainment Systems",
+        "description": "Bags, bottles, and more",
+        "image": "/images/cat-accessories.jpg",
+        "productCount": 2
+    }
+]

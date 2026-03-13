@@ -1,0 +1,73 @@
+[{
+        "id": 1,
+        "name": "Pioneer 4 Channel Amplifier 520W - GMA4704",
+        "description": "The Pioneer GM A4704 is a 4 channel bridgeable amplifier designed to provide flexible, powerful performance for a variety of in-car audio setups. With a maximum output of 520 watts (2 x 260W at 2 Ohms), it can deliver strong power to a range of speaker configurations. For standard 4 Ohm speaker setups, it offers 4 x 80W max power, with a continuous RMS output of 4 x 40W, ensuring clean and reliable sound throughout your vehicle.",
+        "price": 209,
+        "categoryId": "cat-amplifiers",
+        "image": "https://www.repco.com.au/medias/A9762069.jpg?context=bWFzdGVyfGltYWdlc3wyMzkzMHxpbWFnZS9qcGVnfGMzbHpMVzFoYzNSbGNpOXBiV0ZuWlhNdmFHVTRMMmd3WVM4eE1UQTJNRGd3TmpZeE5UQTNNQzlCT1RjMk1qQTJPUzVxY0djfDc1MmMwODYzODY3OTc4YmI2MzY1OTBiMTVhNmIwZmFiMmI5YTQyNmQzMGNhODAwOWRmN2ZlZTQ3OTNjNGZjYTI",
+        "stock": 50,
+        "createdAt": "5/14/2023",
+        "updatedAt": "1/7/2020",
+        "featured": false
+    },
+    {
+        "id": 2,
+        "name": "MTX 5 Channel Amplifier Terminator Series - TN800.5",
+        "description": "The MTX 5 Channel Amplifier Terminator Series combines efficient Class-D circuit design with versatile power output. It delivers 50 watts RMS per channel at 4 ohms for four channels, alongside a dedicated subwoofer channel providing 300 watts RMS at 4 ohms. At 2 ohms, the power increases to 75 watts RMS per channel for the four full-range channels, and 500 watts RMS for the subwoofer. Bridged, channels 1 and 2, or 3 and 4, can provide 150 watts RMS at 4 ohms for added flexibility.",
+        "price": 499,
+        "categoryId": "cat-amplifiers",
+        "image": "https://www.repco.com.au/medias/A5747056.jpg?context=bWFzdGVyfGltYWdlc3w0ODAzNnxpbWFnZS9qcGVnfGMzbHpMVzFoYzNSbGNpOXBiV0ZuWlhNdmFEVTJMMmd4TWk4eE1URTVNVFV4T1RFNE1qZzNPQzlCTlRjME56QTFOaTVxY0djfDI2OGEyOTA3NDQxNGU1N2ViMWQ4MjFiOTgzYjc1ZjVkZmFiOWY2ZDEzMTQ2MzVkMzcyOWY3YTEyMzVjNjM4MDY",
+        "stock": 65,
+        "createdAt": "3/15/2020",
+        "updatedAt": "5/16/2023",
+        "featured": true
+    },
+    {
+        "id": 3,
+        "name": "Pioneer 6.5 Inch 2-Way 300W Car Speakers - TSG1620F-2",
+        "description": "The Pioneer TS-G1620F-2 Replacement speakers come with a deeper bass and higher performance compared to factory speakers. Pioneers TS-G1620F-2 speakers are an excellent choice to replace a bad set of factory 6.5 inch speakersas The two-way design of these Pioneer speakers handles 250 watts max power (40 watts nominal) and features Pioneer's extremely strong and lightweight Injected Molded Polypropylene (IMPP) composite cone woofer, for improved sensitivity and reduced distortion.\n\nThe conex damper of the TS-G1620F-2 car speakers deliver higher power handling and deeper bass while the 1-3/16 inch balanced dome tweeter reproduces highs with great performance and musicality. These speakers are designed with a shallow mounting depth for easy install into a wide variety of vehicles.",
+        "price": 65,
+        "categoryId": "cat-speakers",
+        "image": "https://www.repco.com.au/medias/A5541699.jpg?context=bWFzdGVyfGltYWdlc3wxODIzNDB8aW1hZ2UvanBlZ3xjM2x6TFcxaGMzUmxjaTlwYldGblpYTXZhRGN4TDJoak5TOHhNRGt4TURZd01qQTJOems1T0M5Qk5UVTBNVFk1T1M1cWNHY3xjOGQwZmUxOTc0ODIxMDM5MGIxY2E1Mjk4ODNjZGUxMTJkMmVhNDkyOGY3ZmEwN2ViZGEwZGM3NzZhYTM2OTAx",
+        "stock": 116,
+        "createdAt": "9/11/2026",
+        "updatedAt": "12/9/2030",
+        "featured": false
+    },
+    {
+        "id": 4,
+        "name": "TX6 Series - 6.5in Component ft Silkdome Tweeters & Grills included - TX665S",
+        "description": "The TX665S shines with exceptional construction. Its sound quality is breathtaking. The MTX TX665S are high-end separate speakers. We have conservatively rated these at 90W RMS per channel, but recommend an amplifier power of 80-120W RMS. They have an impedance of 4O to suit a range of amplifiers. They are equipped with all the best: MTX aluminium chassis for optimal rigidity, aluminium phasing warhead to neutralise standing waves, the hybrid pressed paper membrane with embedded glass particles for more musicality, detail and warmth, with oversized magnet for incredible power handling, extra-large 30mm diameter TSV TIL coil for detail at all levels and power handling thanks to better cooling, phenomenal neodymium driven 28mm high-definition silk dome tweeter for a soft and dynamic sound, external passive filter with esoteric components (ultra musical polypropylene capacitors, unsaturated air coils), progressive rubber suspension to handle large deflections while remaining reliable.",
+        "price": 399,
+        "categoryId": "cat-speakers",
+        "image": "https://www.repco.com.au/medias/A5731781.jpg?context=bWFzdGVyfGltYWdlc3w5MjI5OHxpbWFnZS9qcGVnfGMzbHpMVzFoYzNSbGNpOXBiV0ZuWlhNdmFHUmtMMmhpTlM4eE1URTVNVFE1T1RNNU1UQXdOaTlCTlRjek1UYzRNUzVxY0djfDgwMTEzOTk2Y2I3NjNmMGZmODdjOWZhNGU3ZTFiYzMyMTRjNjM4NDA1ODAzNDA1YWU1MTYyNzM1NTczNjNkMDc",
+        "stock": 61,
+        "createdAt": "8/25/2025",
+        "updatedAt": "7/3/2026",
+        "featured": true
+    },
+    {
+        "id": 5,
+        "name": "MTX RoadThunder Active Slimline 10in with Enclosure - 200W RMS - RTF10P",
+        "description": "The ultra-flat and amplified subwoofer MTX RTF10P is a marvel. Reproducing so much bass in such a space-saving cabinet is no small feat. The integrated Class-D amplifier is perfectly suited: very powerful, it consumes little power and reproduces music with dynamism and enthusiasm. It is protected by a limiter which allows it to be used 100% without any risk of failures from over driving. The 16mm MDF box is very rigid, the subwoofer is specially developed to maintain a travel similar to that of a full sized MTX subwoofer.",
+        "price": 549,
+        "categoryId": "cat-subwoofers",
+        "image": "https://www.repco.com.au/medias/A5731803.jpg?context=bWFzdGVyfGltYWdlc3wyMjE1MDZ8aW1hZ2UvanBlZ3xjM2x6TFcxaGMzUmxjaTlwYldGblpYTXZhR1psTDJneU9TOHhNVE13TlRBek1qSTFNelEzTUM5Qk5UY3pNVGd3TXk1cWNHY3wzNjlmNzJhOTA0NGNmYThmYzU3OTRiMGI3MzI5NTE4NGI2ZjcwYjkxZWFkYmJlNjIwNWViODE4ZGQ3MmVkZDVh",
+        "stock": 107,
+        "createdAt": "9/13/2025",
+        "updatedAt": "5/25/2030",
+        "featured": true
+    },
+    {
+        "id": 6,
+        "name": "Aerpro 10in Advanced Infotainment System to Suit Landcruiser 200 Series VX & Sahara (2016-2021) - AMUTO53",
+        "description": "The Aerpro AMUTO53 Advanced Infotainment System is the ultimate head unit upgrade for your Landcruiser 200 Series VX &, Sahara (2016-2021). Australian designed and engineered, this system guarantees a perfect fit with a premium quality finish that complements the interior of your vehicle. Powered by the reliable Linux operating system and a quad-core CPU, it delivers fast and stable performance for a seamless car audio experience.",
+        "price": 2759,
+        "categoryId": "cat-infotainment-systems",
+        "image": "https://www.repco.com.au/medias/A5761118.jpg?context=bWFzdGVyfGltYWdlc3wxMzY3NDd8aW1hZ2UvanBlZ3xjM2x6TFcxaGMzUmxjaTlwYldGblpYTXZhR1EyTDJoaE5pOHhNVE14TkRNMU56YzVOamc1TkM5Qk5UYzJNVEV4T0M1cWNHY3wwZjUzYzJkOGFkYWU2Mjg0YzIyMGYyZTc4ZTgwOTY4OGQyZDNiZDM0ZDkxYWYwNTBiODk1N2Y4MjdjMGYxZDUx",
+        "stock": 161,
+        "createdAt": "2/11/2022",
+        "updatedAt": "5/2/2029",
+        "featured": false
+    }
+]
