@@ -3,7 +3,7 @@ import Footer from "./Footer";
 
 export default function StoreLayout({ children }) {
   return (
-    <div className="min-h-screen flex flex-col bg-base-100">
+    <div className="flex min-h-screen flex-col bg-slate-50">
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

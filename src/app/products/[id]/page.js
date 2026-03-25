@@ -7,7 +7,7 @@ const FALLBACK_IMAGE = "https://placehold.co/600x600?text=No+Image";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductById(id);
   if (!product) return { title: "Product | Shop" };
   return {
     title: `${product.name} | Shop`,
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductById(id);
   if (!product) notFound();
 
   const price =
@@ -28,19 +28,26 @@ export default async function ProductDetailPage({ params }) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="breadcrumbs text-sm mb-6">
-        <ul>
+      <nav className="mb-6 text-sm text-slate-500">
+        <ol className="flex flex-wrap items-center gap-2">
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/" className="hover:text-slate-700">
+              Home
+            </Link>
           </li>
+          <li className="text-slate-400">/</li>
           <li>
-            <Link href="/products">Products</Link>
+            <Link href="/products" className="hover:text-slate-700">
+              Products
+            </Link>
           </li>
-          <li className="opacity-80">{product.name}</li>
-        </ul>
-      </div>
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="relative aspect-square bg-base-200 rounded-2xl overflow-hidden flex items-center justify-center">
+          <li className="text-slate-400">/</li>
+          <li className="text-slate-600">{product.name}</li>
+        </ol>
+      </nav>
+
+      <div className="grid gap-8 md:grid-cols-2">
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-slate-100">
           <img
             src={imageUrl}
             alt={product.name}
@@ -48,20 +55,20 @@ export default async function ProductDetailPage({ params }) {
           />
         </div>
         <div>
-          <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-2xl font-bold text-primary">
+          <h1 className="mb-2 text-3xl font-bold text-slate-900">{product.name}</h1>
+          <div className="mb-4 flex items-center gap-3">
+            <span className="text-2xl font-bold text-blue-600">
               ${price.toFixed(2)}
             </span>
           </div>
-          <p className="text-base-content/90 mb-6">{product.description}</p>
-          <p className="text-sm opacity-80 mb-6">
+          <p className="mb-6 text-slate-700">{product.description}</p>
+          <p className="mb-6 text-sm text-slate-600">
             {product.stock > 0 ? (
-              <span className="text-success">
+              <span className="text-emerald-600">
                 In stock ({product.stock} available)
               </span>
             ) : (
-              <span className="text-error">Out of stock</span>
+              <span className="text-red-600">Out of stock</span>
             )}
           </p>
           <AddToCartButton product={product} />

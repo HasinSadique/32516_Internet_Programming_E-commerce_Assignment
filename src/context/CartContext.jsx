@@ -1,31 +1,21 @@
 "use client";
 
-import { createContext, useContext, useCallback, useEffect, useState } from "react";
+import { createContext, useContext, useCallback, useState } from "react";
 
 const CART_KEY = "shop_cart";
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState([]);
-
-  const loadCart = useCallback(() => {
-    try {
-      const raw = typeof window !== "undefined" && localStorage.getItem(CART_KEY);
-      if (raw) setItems(JSON.parse(raw));
-    } catch {
-      setItems([]);
+  const [items, setItems] = useState(() => {
+    if (typeof window === "undefined") {
+      return [];
     }
-  }, []);
-
-  useEffect(() => {
-    loadCart();
-  }, [loadCart]);
-
-  const saveCart = useCallback((newItems) => {
-    setItems(newItems);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(CART_KEY, JSON.stringify(newItems));
+    try {
+      const raw = localStorage.getItem(CART_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
     }
   }, []);
 
@@ -50,6 +40,16 @@ export function CartProvider({ children }) {
     []
   );
 
+  const removeFromCart = useCallback((productId) => {
+    setItems((prev) => {
+      const next = prev.filter((i) => i.id != productId);
+      if (typeof window !== "undefined") {
+        localStorage.setItem(CART_KEY, JSON.stringify(next));
+      }
+      return next;
+    });
+  }, []);
+
   const updateQuantity = useCallback(
     (productId, quantity) => {
       if (quantity < 1) {
@@ -66,18 +66,8 @@ export function CartProvider({ children }) {
         return next;
       });
     },
-    []
+    [removeFromCart]
   );
-
-  const removeFromCart = useCallback((productId) => {
-    setItems((prev) => {
-      const next = prev.filter((i) => i.id != productId);
-      if (typeof window !== "undefined") {
-        localStorage.setItem(CART_KEY, JSON.stringify(next));
-      }
-      return next;
-    });
-  }, []);
 
   const clearCart = useCallback(() => {
     setItems([]);

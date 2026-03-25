@@ -4,65 +4,49 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
+  // When clicked, "Home" loads the homepage (/), located at src/app/page.js
   { href: "/", label: "Home" },
+  // When clicked, "Products" loads the products listing page (/products), located at src/app/products/page.js
   { href: "/products", label: "Products" },
+  // When clicked, "Cart" loads the shopping cart page (/cart), located at src/app/cart/page.js
   { href: "/cart", label: "Cart" },
+  // When clicked, "Order Status" loads the order status page (/order_status), located at src/app/order_status/page.js
+  { href: "/order_status", label: "Order Status" },
+  // When clicked, "Admin" loads the admin dashboard page (/admin), located at src/app/admin/page.js
+  { href: "/admin", label: "Admin" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
-  const isAdmin = pathname?.startsWith("/admin");
 
   return (
-    <header className="navbar bg-base-200 shadow-md sticky top-0 z-50">
-      <div className="navbar-start">
-        <Link
-          href={isAdmin ? "/admin" : "/"}
-          className="btn btn-ghost text-xl font-bold text-primary"
-        >
-          {isAdmin ? "Admin" : "Shop"}
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+        <Link href="/" className="text-xl font-bold text-blue-600">
+          AutoTech
         </Link>
-      </div>
-      <div className="navbar-center hidden md:flex">
-        <ul className="menu menu-horizontal gap-1">
-          {isAdmin ? (
-            <li>
+
+        <nav className="hidden items-center gap-2 md:flex">
+          {navLinks.map((link) => {
+            const isActive =
+              pathname === link.href ||
+              (link.href !== "/" && pathname?.startsWith(link.href));
+
+            return (
               <Link
-                href="/admin/products"
-                className={pathname?.includes("/admin/products") ? "active" : ""}
+                key={link.href}
+                href={link.href}
+                className={
+                  isActive
+                    ? "rounded-md bg-blue-100 px-3 py-2 text-sm font-medium text-blue-700"
+                    : "rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900"
+                }
               >
-                Products
+                {link.label}
               </Link>
-            </li>
-          ) : (
-            navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={
-                    pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href))
-                      ? "active"
-                      : ""
-                  }
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
-      <div className="navbar-end gap-2">
-        {!isAdmin && (
-          <Link href="/admin" className="btn btn-ghost btn-sm">
-            Admin
-          </Link>
-        )}
-        {isAdmin && (
-          <Link href="/" className="btn btn-ghost btn-sm">
-            Store
-          </Link>
-        )}
+            );
+          })}
+        </nav>
       </div>
     </header>
   );

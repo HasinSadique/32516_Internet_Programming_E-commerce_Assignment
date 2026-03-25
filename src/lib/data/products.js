@@ -1,104 +1,75 @@
-import fs from "fs";
-import path from "path";
+import { GET, GET_BY_ID } from "@/app/api/products/route";
 
-const PRODUCTS_FILE = path.join(
-  process.cwd(),
-  "src",
-  "data",
-  "dummy-data",
-  "products.json",
-);
+function normalizeProduct(product) {
+  return {
+    _id: product._id,
+    name: product.name?.trim() || "",
+    description: product.description?.trim() || "",
+    price: Number(product.price) || 0,
+    categoryId: product.categoryId || "",
+    image: product.image || "",
+    stock: Number(product.stock) || 0,
+    featured: Boolean(product.featured),
+    createdAt: product.createdAt || null,
+    updatedAt: product.updatedAt || null,
+  };
+}
 
-function readProducts() {
-  try {
-    const data = fs.readFileSync(PRODUCTS_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch (err) {
-    console.error("Error reading products:", err);
+function sortProducts(products, sortBy, order = "asc") {
+  const direction = order === "desc" ? -1 : 1;
+
+  return [...products].sort((a, b) => {
+    const aValue = a[sortBy];
+    const bValue = b[sortBy];
+
+    if (typeof aValue === "string" && typeof bValue === "string") {
+      return aValue.localeCompare(bValue) * direction;
+    }
+
+    if (aValue > bValue) return 1 * direction;
+    if (aValue < bValue) return -1 * direction;
+    return 0;
+  });
+}
+
+export async function getAllProducts(options = {}) {
+  const { featuredOnly = false, sortBy, order = "asc" } = options;
+  const response = await GET();
+  const payload = await response.json();
+  if (!response.ok) {
+    console.error("Failed to fetch all products:", payload?.error || payload);
     return [];
   }
-}
-
-function writeProducts(products) {
-  try {
-    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(products, null, 2), "utf-8");
-    return true;
-  } catch (err) {
-    console.error("Error writing products:", err);
-    return false;
+  let products = Array.isArray(payload) ? payload.map(normalizeProduct) : [];
+  if (featuredOnly) {
+    products = products.filter((product) => product.featured);
   }
-}
-
-export function getAllProducts(options = {}) {
-  const { featuredOnly = false, categoryId = null } = options;
-  let products = readProducts();
-  if (featuredOnly) products = products.filter((p) => p.featured);
-  if (categoryId != null && categoryId !== "")
-    products = products.filter((p) => p.categoryId === categoryId);
+  if (sortBy) {
+    products = sortProducts(products, sortBy, order);
+  }
   return products;
 }
 
-export function getProductById(id) {
-  const products = readProducts();
-  return products.find((p) => p.id == id) ?? null;
-}
+export async function getProductById(id) {
+  console.log("id", id);
+  if (!id) return null;
+  const response = await GET_BY_ID(id);
+  const payload = await response.json();
+  if (!response.ok) {
+    console.error("Failed to fetch product by id:", payload?.error || payload);
+    return null;
+  }
 
-export function createProduct(input) {
-  const products = readProducts();
-  const maxId = products.reduce(
-    (max, p) => (Number(p.id) > max ? Number(p.id) : max),
-    0,
-  );
-  const id = maxId + 1;
-  const now = new Date().toISOString();
-  const product = {
-    id,
-    name: input.name ?? "",
-    description: input.description ?? "",
-    price: Number(input.price) ?? 0,
-    categoryId: input.categoryId ?? "",
-    image: input.image ?? "",
-    stock: Number(input.stock) ?? 0,
-    featured: Boolean(input.featured),
-    createdAt: now,
-    updatedAt: now,
-  };
-  products.push(product);
-  return writeProducts(products) ? product : null;
-}
+  console.log("payload", payload);
+  return normalizeProduct(payload);
 
-export function updateProduct(id, input) {
-  const products = readProducts();
-  const index = products.findIndex((p) => p.id == id);
-  if (index === -1) return null;
-  const existing = products[index];
-  const updated = {
-    ...existing,
-    name: input.name !== undefined ? input.name : existing.name,
-    description:
-      input.description !== undefined
-        ? input.description
-        : existing.description,
-    price: input.price !== undefined ? Number(input.price) : existing.price,
-    categoryId:
-      input.categoryId !== undefined ? input.categoryId : existing.categoryId,
-    image: input.image !== undefined ? input.image : existing.image,
-    stock: input.stock !== undefined ? Number(input.stock) : existing.stock,
-    featured:
-      input.featured !== undefined
-        ? Boolean(input.featured)
-        : existing.featured,
-    id: existing.id,
-    createdAt: existing.createdAt,
-    updatedAt: new Date().toISOString(),
-  };
-  products[index] = updated;
-  return writeProducts(products) ? updated : null;
-}
+  // // For demo/mock data, you may have an array called PRODUCTS (not shown in this file)
+  // if (typeof PRODUCTS !== "undefined") {
+  //   const numericId = Number(id);
+  //   const product = PRODUCTS.find((prod) => Number(prod.id) === numericId);
+  //   return product ? normalizeProduct(product) : null;
+  // }
 
-export function deleteProduct(id) {
-  const products = readProducts();
-  const next = products.filter((p) => p.id != id);
-  if (next.length === products.length) return false;
-  return writeProducts(next);
+  // // If PRODUCT fetching isn't available, return null
+  // return null;
 }
