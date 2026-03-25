@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AutoTech Solutions
 
-## Getting Started
+AutoTech Solutions is an online e-commerce website where customers can buy automotive electronics such as speakers, dashcams, and stereo monitors like android players and tesla style players. Before this website, the shop handled many customer orders and records on paper. Because of too much paperwork and human mistakes, the business needed an online solution. This website helps reduce errors and paperwork by letting customers order products directly for cash on delivery.
 
-First, run the development server:
+## Technical Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Frontend:** Nextjs Reactjs
+- **Styling:** Tailwind CSS
+- **Routing:** Nextjs App Router
+- **Data:** Dummy JSON files for products and orders
+- **Deployment:** Can be deployed easily to Vercel or any compatible platform
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Responsive mobile and desktop design
+- Product search and filtering
+- Shopping cart and checkout for cash on delivery
+- Admin area for managing products and orders
+- Simple order tracking for customers
+- Clean and easy navigation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Folder Structure
 
-## Learn More
+- `src/app`: All main pages and routes
+- `src/components`: Reusable React components
+- `src/data/dummy-data`: Dummy JSON data for products and orders
+- `src/lib`: Helper functions and logic
 
-To learn more about Next.js, take a look at the following resources:
+## Challenges Overcome
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+When making this website, some parts were quite hard. Connecting data together in the pages was challenging at first. Making the admin and user areas different was a little confusing. Also, keeping the design working for both mobile and desktop took some time. I learnt more about how Nextjs handles routing and data. Now the site works fast and looks neat, solving the main problems for the shop and customers.
