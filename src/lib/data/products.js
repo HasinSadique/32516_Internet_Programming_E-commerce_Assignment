@@ -1,8 +1,18 @@
 import { GET, GET_BY_ID } from "@/app/api/products/route";
 
+function normalizeIdentifier(value) {
+  if (value == null) return "";
+  if (typeof value === "object" && value.$oid) {
+    return String(value.$oid);
+  }
+  return String(value);
+}
+
 function normalizeProduct(product) {
+  const normalizedMongoId = normalizeIdentifier(product?._id);
+
   return {
-    _id: product._id,
+    _id: normalizedMongoId,
     name: product.name?.trim() || "",
     description: product.description?.trim() || "",
     price: Number(product.price) || 0,
@@ -51,7 +61,6 @@ export async function getAllProducts(options = {}) {
 }
 
 export async function getProductById(id) {
-  console.log("id", id);
   if (!id) return null;
   const response = await GET_BY_ID(id);
   const payload = await response.json();
@@ -60,16 +69,5 @@ export async function getProductById(id) {
     return null;
   }
 
-  console.log("payload", payload);
   return normalizeProduct(payload);
-
-  // // For demo/mock data, you may have an array called PRODUCTS (not shown in this file)
-  // if (typeof PRODUCTS !== "undefined") {
-  //   const numericId = Number(id);
-  //   const product = PRODUCTS.find((prod) => Number(prod.id) === numericId);
-  //   return product ? normalizeProduct(product) : null;
-  // }
-
-  // // If PRODUCT fetching isn't available, return null
-  // return null;
 }

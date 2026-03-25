@@ -30,16 +30,20 @@ function formatDate(value) {
 }
 
 function getStatusClasses(status) {
-  if (status === "delivered") return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  if (status === "delivered")
+    return "border-emerald-200 bg-emerald-50 text-emerald-700";
   if (status === "shipped") return "border-blue-200 bg-blue-50 text-blue-700";
-  if (status === "processing") return "border-amber-200 bg-amber-50 text-amber-700";
+  if (status === "processing")
+    return "border-amber-200 bg-amber-50 text-amber-700";
   if (status === "cancelled") return "border-red-200 bg-red-50 text-red-700";
   return "border-slate-200 bg-slate-50 text-slate-700";
 }
 
 function getPaymentClasses(status) {
-  if (status === "paid") return "border-emerald-200 bg-emerald-50 text-emerald-700";
-  if (status === "refunded") return "border-slate-300 bg-slate-100 text-slate-700";
+  if (status === "card")
+    return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  if (status === "refunded")
+    return "border-slate-300 bg-slate-100 text-slate-700";
   return "border-amber-200 bg-amber-50 text-amber-700";
 }
 
@@ -105,7 +109,9 @@ export default function AdminOrdersPanel({ initialOrders }) {
       <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
           <p className="text-sm text-slate-500">Total orders</p>
-          <p className="mt-1 text-2xl font-bold text-slate-900">{stats.total}</p>
+          <p className="mt-1 text-2xl font-bold text-slate-900">
+            {stats.total}
+          </p>
         </div>
         <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 shadow-sm">
           <p className="text-sm text-amber-700">Open orders</p>
@@ -126,8 +132,8 @@ export default function AdminOrdersPanel({ initialOrders }) {
           </p>
         </div>
       </div>
-
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Orders table */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm ">
         <div className="mb-4 flex flex-wrap items-center gap-3">
           <input
             type="search"
@@ -149,8 +155,8 @@ export default function AdminOrdersPanel({ initialOrders }) {
             ))}
           </select>
         </div>
-
-        <div className="overflow-x-auto">
+        {/* Orders table */}
+        <div className="overflow-x-auto relative">
           <table className="w-full min-w-[980px] text-sm text-slate-700">
             <thead className="border-b border-slate-200 bg-slate-50 text-slate-600">
               <tr>
@@ -158,7 +164,9 @@ export default function AdminOrdersPanel({ initialOrders }) {
                 <th className="px-3 py-2 text-left font-semibold">Customer</th>
                 <th className="px-3 py-2 text-right font-semibold">Items</th>
                 <th className="px-3 py-2 text-right font-semibold">Total</th>
-                <th className="px-3 py-2 text-left font-semibold">Payment</th>
+                <th className="px-3 py-2 text-left font-semibold">
+                  Payment Method
+                </th>
                 <th className="px-3 py-2 text-left font-semibold">Status</th>
                 <th className="px-3 py-2 text-left font-semibold">Date</th>
               </tr>
@@ -166,7 +174,10 @@ export default function AdminOrdersPanel({ initialOrders }) {
             <tbody className="divide-y divide-slate-200">
               {filteredOrders.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-3 py-8 text-center text-slate-500">
+                  <td
+                    colSpan={7}
+                    className="px-3 py-8 text-center text-slate-500"
+                  >
                     No orders match your filters.
                   </td>
                 </tr>
@@ -177,15 +188,52 @@ export default function AdminOrdersPanel({ initialOrders }) {
                     0,
                   );
                   return (
-                    <tr key={order.id} className="bg-white">
+                    <tr key={order.orderId} className="bg-white">
                       <td className="px-3 py-3 font-semibold text-slate-900">
-                        {order.id}
+                        {order.orderId}
                       </td>
                       <td className="px-3 py-3">
-                        <p className="font-medium text-slate-900">{order.customerName}</p>
-                        <p className="text-xs text-slate-500">{order.customerEmail}</p>
+                        <p className="font-medium text-slate-900">
+                          {order.customer.name}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {order.customer.email}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {order.customer.phone}
+                        </p>
                       </td>
-                      <td className="px-3 py-3 text-right">{totalItems}</td>
+                      {/* Items ordered */}
+                      <td className="px-3 py-3 text-right group relative ">
+                        <span>{totalItems}</span>
+                        <div className="fixed left-1/2 top-1/2 z-40 mx-auto hidden min-w-[240px] max-w-xs -translate-x-1/2 -translate-y-1/2 whitespace-normal rounded-lg border border-slate-300 bg-white px-4 py-3 text-left text-xs shadow-2xl group-hover:block group-focus-within:block">
+                          <div className="font-semibold mb-2 text-slate-900">
+                            Items Ordered:
+                          </div>
+                          <ul className="space-y-1">
+                            {order.items.map((item, idx) => (
+                              <li key={item.productId || idx} className="">
+                                <span className="mr-2 text-slate-700">
+                                  {idx + 1}.
+                                </span>
+                                <span className="font-medium text-slate-800">
+                                  {item.name}
+                                </span>
+                                {item.quantity && (
+                                  <span className="ml-2 text-slate-600">
+                                    &times; {item.quantity}
+                                  </span>
+                                )}
+                                {item.price && (
+                                  <span className="ml-2 text-slate-500">
+                                    ({formatCurrency(item.price)})
+                                  </span>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </td>
                       <td className="px-3 py-3 text-right font-medium text-slate-900">
                         {formatCurrency(order.total)}
                       </td>
@@ -193,7 +241,9 @@ export default function AdminOrdersPanel({ initialOrders }) {
                         <span
                           className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${getPaymentClasses(order.paymentStatus)}`}
                         >
-                          {order.paymentStatus}
+                          {order.payment.method === "cod"
+                            ? "Cash on Delivery"
+                            : "Card"}
                         </span>
                       </td>
                       <td className="px-3 py-3">
@@ -218,7 +268,9 @@ export default function AdminOrdersPanel({ initialOrders }) {
                           </select>
                         </div>
                       </td>
-                      <td className="px-3 py-3">{formatDate(order.createdAt)}</td>
+                      <td className="px-3 py-3">
+                        {formatDate(order.createdAt)}
+                      </td>
                     </tr>
                   );
                 })

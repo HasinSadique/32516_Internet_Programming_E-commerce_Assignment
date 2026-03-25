@@ -3,14 +3,10 @@ import { getCollection } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
 function buildProductQuery(id) {
-  if (typeof id === "string" && ObjectId.isValid(id)) {
-    return { _id: new ObjectId(id) };
+  if (typeof id !== "string" || !ObjectId.isValid(id)) {
+    return null;
   }
-  const numericId = Number(id);
-  if (Number.isInteger(numericId)) {
-    return { id: numericId };
-  }
-  return { id };
+  return { _id: new ObjectId(id) };
 }
 
 function sanitizeProductPayload(payload) {
@@ -69,8 +65,13 @@ async function getRouteId(params) {
 export async function GET(_, { params }) {
   try {
     const id = await getRouteId(params);
+    const query = buildProductQuery(id);
+    if (!query) {
+      return NextResponse.json({ error: "Invalid product id." }, { status: 400 });
+    }
+
     const productsCollection = await getCollection("products");
-    const product = await productsCollection.findOne(buildProductQuery(id));
+    const product = await productsCollection.findOne(query);
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
@@ -89,6 +90,11 @@ export async function GET(_, { params }) {
 export async function PUT(request, { params }) {
   try {
     const id = await getRouteId(params);
+    const query = buildProductQuery(id);
+    if (!query) {
+      return NextResponse.json({ error: "Invalid product id." }, { status: 400 });
+    }
+
     const body = await request.json();
     const { data, error } = sanitizeProductPayload(body);
 
@@ -104,8 +110,6 @@ export async function PUT(request, { params }) {
     }
 
     const productsCollection = await getCollection("products");
-    const query = buildProductQuery(id);
-
     const updateResult = await productsCollection.updateOne(query, {
       $set: {
         ...data,
@@ -131,8 +135,13 @@ export async function PUT(request, { params }) {
 export async function DELETE(_, { params }) {
   try {
     const id = await getRouteId(params);
+    const query = buildProductQuery(id);
+    if (!query) {
+      return NextResponse.json({ error: "Invalid product id." }, { status: 400 });
+    }
+
     const productsCollection = await getCollection("products");
-    const result = await productsCollection.deleteOne(buildProductQuery(id));
+    const result = await productsCollection.deleteOne(query);
 
     if (result.deletedCount === 0) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });

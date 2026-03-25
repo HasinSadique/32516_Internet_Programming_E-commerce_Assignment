@@ -27,7 +27,9 @@ export default async function AdminPage() {
   const outOfStockProducts = products.filter(
     (product) => Number(product.stock) <= 0,
   ).length;
-  const pendingOrders = orders.filter((order) => order.status === "pending").length;
+  const pendingOrders = orders.filter(
+    (order) => order.status === "pending",
+  ).length;
   const processingOrders = orders.filter(
     (order) => order.status === "processing",
   ).length;
@@ -35,23 +37,29 @@ export default async function AdminPage() {
   const recentOrders = [...orders]
     .sort(
       (a, b) =>
-        new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime(),
+        new Date(b.createdAt || 0).getTime() -
+        new Date(a.createdAt || 0).getTime(),
     )
     .slice(0, 5);
 
   return (
     <div className="container mx-auto px-4 py-10">
+      {/* Admin dashboard title and description */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-slate-900">Admin Dashboard</h1>
         <p className="mt-1 text-slate-600">
-          Manage products, monitor orders, and keep your store operations on track.
+          Manage products, monitor orders, and keep your store operations on
+          track.
         </p>
       </div>
 
+      {/* Product and order stats */}
       <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
           <p className="text-sm text-slate-500">Total products</p>
-          <p className="mt-1 text-2xl font-bold text-slate-900">{products.length}</p>
+          <p className="mt-1 text-2xl font-bold text-slate-900">
+            {products.length}
+          </p>
         </div>
         <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 shadow-sm">
           <p className="text-sm text-amber-700">Low stock</p>
@@ -72,28 +80,33 @@ export default async function AdminPage() {
           </p>
         </div>
       </div>
-
+      {/* Manage products and orders links */}
       <div className="mb-6 grid gap-6 sm:grid-cols-2">
         <Link
           href="/admin/products"
           className="block rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-blue-300 hover:shadow-md"
         >
-          <h2 className="text-lg font-semibold text-slate-900">Manage Products</h2>
+          <h2 className="text-lg font-semibold text-slate-900">
+            Manage Products
+          </h2>
           <p className="mt-2 text-sm text-slate-600">
-            Add new products, update pricing and stock, and remove old catalog items.
+            Add new products, update pricing and stock, and remove old catalog
+            items.
           </p>
         </Link>
         <Link
           href="/admin/orders"
           className="block rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-blue-300 hover:shadow-md"
         >
-          <h2 className="text-lg font-semibold text-slate-900">Manage Orders</h2>
+          <h2 className="text-lg font-semibold text-slate-900">
+            Manage Orders
+          </h2>
           <p className="mt-2 text-sm text-slate-600">
             Review customer orders and update fulfillment status from one place.
           </p>
         </Link>
       </div>
-
+      {/* Recent orders table */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-900">Recent Orders</h2>
@@ -117,11 +130,20 @@ export default async function AdminPage() {
             </thead>
             <tbody className="divide-y divide-slate-200">
               {recentOrders.map((order) => (
-                <tr key={order.id}>
-                  <td className="px-3 py-3 font-semibold text-slate-900">{order.id}</td>
+                <tr key={order.orderId}>
+                  <td className="px-3 py-3 font-semibold text-slate-900">
+                    {order.orderId}
+                  </td>
                   <td className="px-3 py-3">
-                    <p className="font-medium text-slate-900">{order.customerName}</p>
-                    <p className="text-xs text-slate-500">{order.customerEmail}</p>
+                    <p className="font-medium text-slate-900">
+                      {order.customer.name}
+                    </p>
+                    {/* <p className="text-xs text-slate-500">
+                      {order.customer.email}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      {order.customer.phone}
+                    </p> */}
                   </td>
                   <td className="px-3 py-3 text-right font-medium">
                     {formatCurrency(order.total)}

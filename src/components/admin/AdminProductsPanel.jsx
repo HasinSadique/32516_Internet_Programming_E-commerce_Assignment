@@ -32,13 +32,14 @@ function normalizeProduct(product) {
   return {
     ...product,
     _id: normalizeIdentifier(product?._id),
-    id: Number(product?.id) || null,
     name: String(product?.name ?? ""),
     description: String(product?.description ?? ""),
     price: Number(product?.price) || 0,
     categoryId: String(product?.categoryId ?? ""),
     image: String(product?.image ?? ""),
-    stock: Number.isInteger(Number(product?.stock)) ? Number(product?.stock) : 0,
+    stock: Number.isInteger(Number(product?.stock))
+      ? Number(product?.stock)
+      : 0,
     featured: Boolean(product?.featured),
     createdAt: product?.createdAt ?? null,
     updatedAt: product?.updatedAt ?? null,
@@ -46,7 +47,7 @@ function normalizeProduct(product) {
 }
 
 function getProductRouteId(product) {
-  return normalizeIdentifier(product?._id || product?.id);
+  return normalizeIdentifier(product?._id);
 }
 
 function toFormState(product) {
@@ -233,7 +234,9 @@ export default function AdminProductsPanel() {
       if (isEditMode) {
         setProducts((prev) =>
           prev.map((product) =>
-            getProductRouteId(product) === activeProductId ? normalized : product,
+            getProductRouteId(product) === activeProductId
+              ? normalized
+              : product,
           ),
         );
         setFeedback({
@@ -379,26 +382,36 @@ export default function AdminProductsPanel() {
               <thead className="border-b border-slate-200 bg-slate-50 text-slate-600">
                 <tr>
                   <th className="px-3 py-2 text-left font-semibold">Name</th>
-                  <th className="px-3 py-2 text-left font-semibold">Category</th>
+                  <th className="px-3 py-2 text-left font-semibold">
+                    Category
+                  </th>
                   <th className="px-3 py-2 text-right font-semibold">Price</th>
                   <th className="px-3 py-2 text-right font-semibold">Stock</th>
                   <th className="px-3 py-2 text-center font-semibold">
                     Featured
                   </th>
                   <th className="px-3 py-2 text-left font-semibold">Updated</th>
-                  <th className="px-3 py-2 text-right font-semibold">Actions</th>
+                  <th className="px-3 py-2 text-right font-semibold">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={7} className="px-3 py-8 text-center text-slate-500">
+                    <td
+                      colSpan={7}
+                      className="px-3 py-8 text-center text-slate-500"
+                    >
                       Loading products...
                     </td>
                   </tr>
                 ) : filteredProducts.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-3 py-8 text-center text-slate-500">
+                    <td
+                      colSpan={7}
+                      className="px-3 py-8 text-center text-slate-500"
+                    >
                       No products found.
                     </td>
                   </tr>
@@ -414,7 +427,9 @@ export default function AdminProductsPanel() {
                         <td className="px-3 py-3 font-medium text-slate-900">
                           {product.name}
                         </td>
-                        <td className="px-3 py-3">{product.categoryId || "N/A"}</td>
+                        <td className="px-3 py-3">
+                          {product.categoryId || "N/A"}
+                        </td>
                         <td className="px-3 py-3 text-right">
                           ${product.price.toFixed(2)}
                         </td>
@@ -432,7 +447,9 @@ export default function AdminProductsPanel() {
                         <td className="px-3 py-3 text-center">
                           {product.featured ? "Yes" : "No"}
                         </td>
-                        <td className="px-3 py-3">{formatDate(product.updatedAt)}</td>
+                        <td className="px-3 py-3">
+                          {formatDate(product.updatedAt)}
+                        </td>
                         <td className="px-3 py-3 text-right">
                           <div className="inline-flex items-center gap-2">
                             <button

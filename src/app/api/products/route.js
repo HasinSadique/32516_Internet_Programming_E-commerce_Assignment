@@ -99,20 +99,8 @@ export async function POST(request) {
     }
 
     const productsCollection = await getCollection("products");
-    const [highestIdProduct] = await productsCollection
-      .find({ id: { $type: "number" } }, { projection: { id: 1 } })
-      .sort({ id: -1 })
-      .limit(1)
-      .toArray();
-
     const now = new Date().toISOString();
-    const nextId =
-      Number.isInteger(Number(payload.id)) && Number(payload.id) > 0
-        ? Number(payload.id)
-        : (highestIdProduct?.id ?? 0) + 1;
-
     const productToInsert = {
-      id: nextId,
       ...data,
       createdAt: now,
       updatedAt: now,

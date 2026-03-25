@@ -11,7 +11,9 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="mb-4 text-3xl font-bold text-slate-900">Your cart is empty</h1>
+        <h1 className="mb-4 text-3xl font-bold text-slate-900">
+          Your cart is empty
+        </h1>
         <p className="mb-6 text-slate-600">Add some products to get started.</p>
         <Link
           href="/products"
@@ -35,14 +37,18 @@ export default function CartPage() {
                 <tr>
                   <th className="px-3 py-2 text-left font-semibold">Product</th>
                   <th className="px-3 py-2 text-left font-semibold">Price</th>
-                  <th className="px-3 py-2 text-left font-semibold">Quantity</th>
-                  <th className="px-3 py-2 text-left font-semibold">Subtotal</th>
+                  <th className="px-3 py-2 text-left font-semibold">
+                    Quantity
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold">
+                    Subtotal
+                  </th>
                   <th className="px-3 py-2 text-left font-semibold" />
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
                 {items.map((item) => (
-                  <tr key={item.id}>
+                  <tr key={item._id}>
                     <td className="px-3 py-3">
                       <div className="flex items-center gap-4">
                         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-slate-100">
@@ -52,17 +58,21 @@ export default function CartPage() {
                             className="object-cover w-full h-full"
                           />
                         </div>
-                        <span className="font-medium text-slate-900">{item.name}</span>
+                        <span className="font-medium text-slate-900">
+                          {item.name}
+                        </span>
                       </div>
                     </td>
-                    <td className="px-3 py-3">${(item.price ?? 0).toFixed(2)}</td>
+                    <td className="px-3 py-3">
+                      ${(item.price ?? 0).toFixed(2)}
+                    </td>
                     <td className="px-3 py-3">
                       <input
                         type="number"
                         min={1}
                         value={item.quantity ?? 1}
                         onChange={(e) =>
-                          updateQuantity(item.id, Number(e.target.value) || 1)
+                          updateQuantity(item._id, Number(e.target.value) || 1)
                         }
                         className="w-20 rounded-md border border-slate-300 bg-white px-2 py-1.5 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                       />
@@ -72,7 +82,7 @@ export default function CartPage() {
                     </td>
                     <td className="px-3 py-3">
                       <button
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item._id)}
                         className="rounded-md px-2 py-1 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 hover:text-red-700"
                       >
                         Remove
@@ -87,14 +97,20 @@ export default function CartPage() {
 
         <div>
           <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="mb-4 text-xl font-bold text-slate-900">Order summary</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-900">
+              Order summary
+            </h2>
             <p className="flex justify-between text-slate-700">
               <span>Subtotal</span>
-              <span className="font-bold text-slate-900">${totalPrice.toFixed(2)}</span>
+              <span className="font-bold text-slate-900">
+                ${totalPrice.toFixed(2)}
+              </span>
             </p>
-            <p className="mt-2 text-sm text-slate-500">Shipping calculated at checkout.</p>
+            <p className="mt-2 text-sm text-slate-500">
+              Shipping calculated at checkout.
+            </p>
             <Link
-              href="/cart"
+              href="/cart/checkout"
               className="mt-4 inline-flex w-full justify-center rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-blue-700"
             >
               Proceed to checkout
