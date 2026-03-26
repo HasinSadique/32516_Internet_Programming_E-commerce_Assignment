@@ -32,12 +32,12 @@ export default function ProductCard({ product }) {
             {product.description}
           </p>
           <div className="mt-auto flex items-center gap-2 pt-2">
-            <span className="text-lg font-bold text-blue-600">${price.toFixed(2)}</span>
+            <span className="text-lg font-bold text-blue-600">
+              ${price.toFixed(2)}
+            </span>
           </div>
           {product.stock != null && product.stock < 21 && product.stock > 0 && (
-            <p className="text-xs text-amber-600">
-              Only {product.stock} left
-            </p>
+            <p className="text-xs text-amber-600">Only {product.stock} left</p>
           )}
         </div>
       </article>

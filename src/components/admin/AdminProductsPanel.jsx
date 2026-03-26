@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import AdminLogoutButton from "@/components/admin/AdminLogoutButton";
 
 const DEFAULT_FORM = {
   name: "",
@@ -307,12 +308,15 @@ export default function AdminProductsPanel() {
             Create, update, and remove products from your store catalog.
           </p>
         </div>
-        <Link
-          href="/admin"
-          className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100"
-        >
-          Back to Dashboard
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/admin/dashboard"
+            className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100"
+          >
+            Back to Dashboard
+          </Link>
+          <AdminLogoutButton />
+        </div>
       </div>
 
       <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

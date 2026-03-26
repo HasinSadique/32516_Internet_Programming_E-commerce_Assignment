@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCollection } from "@/lib/mongodb";
+import { getAdminSessionFromRequest } from "@/lib/auth/adminSession";
 
 async function getRouteId(params) {
   if (!params) return null;
@@ -8,6 +9,14 @@ async function getRouteId(params) {
     return resolvedParams?.id;
   }
   return params?.id;
+}
+
+function requireAdminApiSession(request) {
+  const session = getAdminSessionFromRequest(request);
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized access." }, { status: 401 });
+  }
+  return null;
 }
 
 export async function GET(request, { params }) {
@@ -33,6 +42,11 @@ export async function GET(request, { params }) {
 
 export async function PATCH(request, { params }) {
   try {
+    const unauthorizedResponse = requireAdminApiSession(request);
+    if (unauthorizedResponse) {
+      return unauthorizedResponse;
+    }
+
     const id = await getRouteId(params);
 
     if (!id) {

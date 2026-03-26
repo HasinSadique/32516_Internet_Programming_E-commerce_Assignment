@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCollection } from "@/lib/mongodb";
+import { getAdminSessionFromRequest } from "@/lib/auth/adminSession";
 
 // Generate a unique order ID
 function generateOrderId() {
@@ -27,6 +28,14 @@ function sanitizeOrderPayload(payload) {
     return { data: next };
 }
 
+function requireAdminApiSession(request) {
+    const session = getAdminSessionFromRequest(request);
+    if (!session) {
+        return NextResponse.json({ error: "Unauthorized access." }, { status: 401 }, );
+    }
+    return null;
+}
+
 export async function POST(request) {
     try {
         const payload = await request.json();
@@ -42,7 +51,7 @@ export async function POST(request) {
         if (!result.insertedId) {
             return NextResponse.json({ error: "Failed to create order" }, { status: 500 }, );
         }
-        return NextResponse.json({ _id: result.insertedId, ...data }, { status: 201 }, );
+        return NextResponse.json({ _id: result.insertedId.toString(), ...data }, { status: 201 }, );
     } catch (error) {
         console.error("Error creating order:", error);
         return NextResponse.json({ error: "Failed to create order" }, { status: 500 }, );
@@ -51,6 +60,11 @@ export async function POST(request) {
 
 export async function GET(request) {
     try {
+        const unauthorizedResponse = requireAdminApiSession(request);
+        if (unauthorizedResponse) {
+            return unauthorizedResponse;
+        }
+
         const ordersCollection = await getCollection("orders");
         const orders = await ordersCollection.find({}).toArray();
         return NextResponse.json(orders, { status: 200 });

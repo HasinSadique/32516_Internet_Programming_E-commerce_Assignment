@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { getAdminSessionFromRequest } from "@/lib/auth/adminSession";
 
 function buildProductQuery(id) {
   if (typeof id === "string" && ObjectId.isValid(id)) {
@@ -57,6 +58,17 @@ function sanitizeProductPayload(payload, { allowPartial = false } = {}) {
   return { data: next };
 }
 
+function requireAdminApiSession(request) {
+  const session = getAdminSessionFromRequest(request);
+  if (!session) {
+    return NextResponse.json(
+      { error: "Unauthorized access." },
+      { status: 401 },
+    );
+  }
+  return null;
+}
+
 export async function GET(request) {
   try {
     const productsCollection = await getCollection("products");
@@ -92,6 +104,11 @@ export async function GET_BY_ID(id) {
 
 export async function POST(request) {
   try {
+    const unauthorizedResponse = requireAdminApiSession(request);
+    if (unauthorizedResponse) {
+      return unauthorizedResponse;
+    }
+
     const payload = await request.json();
     const { data, error } = sanitizeProductPayload(payload);
     if (error) {

@@ -1,5 +1,5 @@
 import AdminOrdersPanel from "@/components/admin/AdminOrdersPanel";
-import { GET } from "@/app/api/orders/route";
+import { getAllOrders } from "@/lib/data/orders";
 
 export const metadata = {
   title: "Manage Orders | Admin",
@@ -7,13 +7,6 @@ export const metadata = {
 };
 
 export default async function AdminOrdersPage() {
-  const response = await GET();
-  const orders = await response.json();
-  if (!response.ok) {
-    console.error("Failed to fetch all orders:", payload?.error || payload);
-    return [];
-  }
-
-  // const orders = getAllOrders();
+  const orders = await getAllOrders();
   return <AdminOrdersPanel initialOrders={orders} />;
 }

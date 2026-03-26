@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { getAdminSessionFromRequest } from "@/lib/auth/adminSession";
 
 function buildProductQuery(id) {
   if (typeof id !== "string" || !ObjectId.isValid(id)) {
@@ -57,6 +58,17 @@ function sanitizeProductPayload(payload) {
   return { data: next };
 }
 
+function requireAdminApiSession(request) {
+  const session = getAdminSessionFromRequest(request);
+  if (!session) {
+    return NextResponse.json(
+      { error: "Unauthorized access." },
+      { status: 401 },
+    );
+  }
+  return null;
+}
+
 async function getRouteId(params) {
   const resolvedParams = await params;
   return resolvedParams?.id;
@@ -89,6 +101,11 @@ export async function GET(_, { params }) {
 
 export async function PUT(request, { params }) {
   try {
+    const unauthorizedResponse = requireAdminApiSession(request);
+    if (unauthorizedResponse) {
+      return unauthorizedResponse;
+    }
+
     const id = await getRouteId(params);
     const query = buildProductQuery(id);
     if (!query) {
@@ -132,8 +149,13 @@ export async function PUT(request, { params }) {
   }
 }
 
-export async function DELETE(_, { params }) {
+export async function DELETE(request, { params }) {
   try {
+    const unauthorizedResponse = requireAdminApiSession(request);
+    if (unauthorizedResponse) {
+      return unauthorizedResponse;
+    }
+
     const id = await getRouteId(params);
     const query = buildProductQuery(id);
     if (!query) {
