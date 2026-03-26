@@ -59,3 +59,16 @@ export async function GET(request) {
         return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 }, );
     }
 }
+
+// export async function PATCH(request, { params }) {
+//     try {
+//         const { orderId  } = await params;
+//         const { status } = await request.json();
+//         const ordersCollection = await getCollection("orders");
+//         const result = await ordersCollection.updateOne({ orderId }, { $set: { status } }, );
+//         return NextResponse.json(result, { status: 200 });
+//     } catch (error) {
+//         console.error("Error updating order:", error);
+//         return NextResponse.json({ error: "Failed to update order" }, { status: 500 }, );
+//     }
+// }

@@ -71,7 +71,7 @@ export default function AdminOrdersPanel({ initialOrders }) {
     return orders.filter((order) => {
       const queryMatch =
         !query ||
-        order.id.toLowerCase().includes(query) ||
+        order.orderId.toLowerCase().includes(query) ||
         order.customerName.toLowerCase().includes(query) ||
         order.customerEmail.toLowerCase().includes(query);
 
@@ -81,12 +81,28 @@ export default function AdminOrdersPanel({ initialOrders }) {
     });
   }, [orders, searchTerm, statusFilter]);
 
-  function handleStatusChange(orderId, nextStatus) {
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.id === orderId ? { ...order, status: nextStatus } : order,
-      ),
-    );
+  async function handleStatusChange(orderId, nextStatus) {
+    try {
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ status: nextStatus }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const updatedOrder = await response.json();
+        setOrders((prev) =>
+          prev.map((order) =>
+            order.orderId === orderId
+              ? { ...order, status: updatedOrder.status }
+              : order,
+          ),
+        );
+      }
+    } catch (error) {
+      console.error("Failed to update order status:", error);
+    }
   }
 
   return (
@@ -183,7 +199,9 @@ export default function AdminOrdersPanel({ initialOrders }) {
                 </tr>
               ) : (
                 filteredOrders.map((order) => {
-                  const totalItems = order.items.reduce(
+                  if (!order) return null;
+                  if (!order.items || !order.customer) return null;
+                  const totalItems = order?.items?.reduce(
                     (sum, item) => sum + (Number(item.quantity) || 0),
                     0,
                   );
@@ -256,7 +274,10 @@ export default function AdminOrdersPanel({ initialOrders }) {
                           <select
                             value={order.status}
                             onChange={(event) =>
-                              handleStatusChange(order.id, event.target.value)
+                              handleStatusChange(
+                                order.orderId,
+                                event.target.value,
+                              )
                             }
                             className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs text-slate-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                           >
