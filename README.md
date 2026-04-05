@@ -1,3 +1,5 @@
+[Visit the live site](https://autotechsolutions.vercel.app/)
+
 # AutoTech Solutions
 
 AutoTech Solutions is an online e-commerce website where customers can buy automotive electronics such as speakers, dashcams, and stereo monitors like android players and tesla style players. Before this website, the shop handled many customer orders and records on paper. Because of too much paperwork and human mistakes, the business needed an online solution. This website helps reduce errors and paperwork by letting customers order products directly for cash on delivery.
