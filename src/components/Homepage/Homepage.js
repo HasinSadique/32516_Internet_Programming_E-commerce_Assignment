@@ -35,7 +35,7 @@ export default async function Homepage() {
         <div className="absolute inset-0 flex items-center px-8 md:px-16">
           <div className="max-w-2xl text-white">
             <h1 className="mt-3 text-4xl md:text-6xl font-bold leading-tight">
-              Upgrade your drive with premium car audio gear.
+              Upgrade your drive with premium car techs and accessories.
             </h1>
 
             <p className="mt-4 text-sm md:text-base text-blue-100 max-w-xl">
@@ -54,60 +54,6 @@ export default async function Homepage() {
           </div>
         </div>
       </section>
-      {/* lllll */}
-      {/* <section className="relative w-full h-[500px] overflow-hidden rounded-2xl">
-        <Image
-          src="/Autotech_hero_image.png"
-          alt="AutoTech Solutions"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 to-transparent rounded-2xl">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-100">
-              Welcome
-            </p>
-            <h1 className="mt-3 max-w-2xl text-3xl font-bold leading-tight md:text-5xl">
-              Upgrade your drive with premium car audio gear.
-            </h1>
-            <p className="mt-4 max-w-xl text-sm text-blue-100 md:text-base">
-              Explore our best sellers in amplifiers, speakers, and subwoofers,
-              then add your favorites to cart in a few clicks.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                href="/products"
-                className="inline-flex rounded-lg bg-white px-5 py-2.5 font-semibold text-blue-700 transition-colors hover:bg-blue-50"
-              >
-                Shop products
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
-      {/* llll */}
-      {/* <section className="mb-10 overflow-hidden rounded-2xl border border-blue-100 bg-linear-to-r bg-transparen p-8 text-white shadow-sm md:p-12">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-100">
-          Welcome
-        </p>
-        <h1 className="mt-3 max-w-2xl text-3xl font-bold leading-tight md:text-5xl">
-          Upgrade your drive with premium car audio gear.
-        </h1>
-        <p className="mt-4 max-w-xl text-sm text-blue-100 md:text-base">
-          Explore our best sellers in amplifiers, speakers, and subwoofers, then
-          add your favorites to cart in a few clicks.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link
-            href="/products"
-            className="inline-flex rounded-lg bg-white px-5 py-2.5 font-semibold text-blue-700 transition-colors hover:bg-blue-50"
-          >
-            Shop products
-          </Link>
-        </div>
-      </section> */}
 
       <section>
         <div className="mb-5 flex items-end justify-between gap-4">
