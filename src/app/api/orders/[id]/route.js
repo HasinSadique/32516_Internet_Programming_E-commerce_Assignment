@@ -14,7 +14,10 @@ async function getRouteId(params) {
 function requireAdminApiSession(request) {
   const session = getAdminSessionFromRequest(request);
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized access." }, { status: 401 });
+    return NextResponse.json(
+      { error: "Unauthorized access." },
+      { status: 401 },
+    );
   }
   return null;
 }

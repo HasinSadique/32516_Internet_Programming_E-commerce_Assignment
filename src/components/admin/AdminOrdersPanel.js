@@ -203,26 +203,39 @@ export default function AdminOrdersPanel({ initialOrders }) {
                 </tr>
               ) : (
                 filteredOrders.map((order) => {
-                  if (!order) return null;
-                  if (!order.items || !order.customer) return null;
-                  const totalItems = order?.items?.reduce(
+                  if (!order || typeof order !== "object") return null;
+
+                  const customer =
+                    order.customer && typeof order.customer === "object"
+                      ? order.customer
+                      : {};
+                  const items = Array.isArray(order.items) ? order.items : [];
+                  const paymentMethod = String(
+                    order.payment?.method ?? order.paymentMethod ?? "cod",
+                  ).toLowerCase();
+                  const currentStatus = String(order.status ?? "pending")
+                    .toLowerCase()
+                    .trim();
+                  const totalItems = items.reduce(
                     (sum, item) => sum + (Number(item.quantity) || 0),
                     0,
                   );
+                  const rowId = String(order.orderId ?? order._id ?? "");
+
                   return (
-                    <tr key={order.orderId} className="bg-white">
+                    <tr key={rowId} className="bg-white">
                       <td className="px-3 py-3 font-semibold text-slate-900">
-                        {order.orderId}
+                        {rowId || "N/A"}
                       </td>
                       <td className="px-3 py-3">
                         <p className="font-medium text-slate-900">
-                          {order.customer.name}
+                          {customer.name || "Unknown customer"}
                         </p>
                         <p className="text-xs text-slate-500">
-                          {order.customer.email}
+                          {customer.email || "No email"}
                         </p>
                         <p className="text-xs text-slate-500">
-                          {order.customer.phone}
+                          {customer.phone || "No phone"}
                         </p>
                       </td>
                       {/* Items ordered */}
@@ -233,26 +246,35 @@ export default function AdminOrdersPanel({ initialOrders }) {
                             Items Ordered:
                           </div>
                           <ul className="space-y-1">
-                            {order.items.map((item, idx) => (
-                              <li key={item.productId || idx} className="">
-                                <span className="mr-2 text-slate-700">
-                                  {idx + 1}.
-                                </span>
-                                <span className="font-medium text-slate-800">
-                                  {item.name}
-                                </span>
-                                {item.quantity && (
-                                  <span className="ml-2 text-slate-600">
-                                    &times; {item.quantity}
-                                  </span>
-                                )}
-                                {item.price && (
-                                  <span className="ml-2 text-slate-500">
-                                    ({formatCurrency(item.price)})
-                                  </span>
-                                )}
-                              </li>
-                            ))}
+                            {items.length > 0 ? (
+                              items.map((item, idx) => {
+                                const itemPrice = Number(
+                                  item.unitPrice ?? item.price,
+                                );
+                                return (
+                                  <li key={item._id || item.productId || idx}>
+                                    <span className="mr-2 text-slate-700">
+                                      {idx + 1}.
+                                    </span>
+                                    <span className="font-medium text-slate-800">
+                                      {item.name || "Unknown item"}
+                                    </span>
+                                    {item.quantity ? (
+                                      <span className="ml-2 text-slate-600">
+                                        &times; {item.quantity}
+                                      </span>
+                                    ) : null}
+                                    {Number.isFinite(itemPrice) ? (
+                                      <span className="ml-2 text-slate-500">
+                                        ({formatCurrency(itemPrice)})
+                                      </span>
+                                    ) : null}
+                                  </li>
+                                );
+                              })
+                            ) : (
+                              <li className="text-slate-500">No items</li>
+                            )}
                           </ul>
                         </div>
                       </td>
@@ -261,30 +283,34 @@ export default function AdminOrdersPanel({ initialOrders }) {
                       </td>
                       <td className="px-3 py-3">
                         <span
-                          className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${getPaymentClasses(order.paymentStatus)}`}
+                          className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${getPaymentClasses(paymentMethod)}`}
                         >
-                          {order.payment.method === "cod"
+                          {paymentMethod === "cod"
                             ? "Cash on Delivery"
-                            : "Card"}
+                            : paymentMethod === "paypal"
+                              ? "PayPal"
+                              : "Card"}
                         </span>
                       </td>
                       <td className="px-3 py-3">
                         <div className="flex items-center gap-2">
                           <span
-                            className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${getStatusClasses(order.status)}`}
+                            className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${getStatusClasses(currentStatus)}`}
                           >
-                            {order.status}
+                            {currentStatus}
                           </span>
                           <select
-                            value={order.status}
+                            value={currentStatus}
                             onChange={(event) =>
-                              handleStatusChange(
-                                order.orderId,
-                                event.target.value,
-                              )
+                              handleStatusChange(rowId, event.target.value)
                             }
                             className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs text-slate-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                           >
+                            {!STATUS_OPTIONS.includes(currentStatus) ? (
+                              <option value={currentStatus}>
+                                {currentStatus}
+                              </option>
+                            ) : null}
                             {STATUS_OPTIONS.map((status) => (
                               <option key={status} value={status}>
                                 {status}

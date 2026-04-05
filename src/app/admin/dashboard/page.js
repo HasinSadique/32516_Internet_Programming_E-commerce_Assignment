@@ -17,7 +17,10 @@ function formatCurrency(value) {
 }
 
 export default async function AdminPage() {
-  const [products, orders] = await Promise.all([getAllProducts(), getAllOrders()]);
+  const [products, orders] = await Promise.all([
+    getAllProducts(),
+    getAllOrders(),
+  ]);
 
   const lowStockProducts = products.filter(
     (product) => Number(product.stock) > 0 && Number(product.stock) < 10,

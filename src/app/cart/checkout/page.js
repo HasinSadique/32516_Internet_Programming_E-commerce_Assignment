@@ -73,17 +73,10 @@ export default function CheckoutPage() {
     } else {
       setErrors({ order: "Failed to place order" });
     }
-    // setTimeout(() => {
-    //   //   setOrderId(id);
-    //   //   setSubmitted(true);
-    //   clearCart();
-    //   //   setIsSubmitting(false);
-    // }, 1200);
   }
 
   async function submitOrder() {
     try {
-      // Compose the payload with the required fields
       const orderPayload = {
         customer: {
           name: form.name,
@@ -103,7 +96,7 @@ export default function CheckoutPage() {
         total: totalPrice,
         timestamp: new Date().toISOString(),
       };
-      // Send the POST request to your order endpoint (create a real endpoint in production)
+      // Send the POST request
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: {
@@ -111,7 +104,7 @@ export default function CheckoutPage() {
         },
         body: JSON.stringify(orderPayload),
       });
-      // Try to get the order ID from the response (assuming JSON { orderId: "..." })
+      // Get the order ID
       if (res.ok) {
         const data = await res.json();
         return data.orderId || null;
@@ -194,7 +187,12 @@ export default function CheckoutPage() {
           >
             <h1 className="text-3xl font-bold mb-7 text-slate-900">
               Customer Information
+              <p className="mt-1 text-xs italic text-slate-500">
+                We do not require our customers to create an account or register
+                with us.
+              </p>
             </h1>
+
             <div className="mb-5">
               <label className="block text-slate-700 font-semibold mb-1">
                 Name <span className="text-red-500">*</span>

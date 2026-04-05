@@ -68,9 +68,9 @@ export default function OrderStatusPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-violet-100">
       <div className="container mx-auto px-4 py-12 flex flex-col items-center">
-        <div className="w-full max-w-xl mb-12">
+        <div className={`w-full max-w-xl mb-12`}>
           <div className="bg-white/95 shadow-xl rounded-2xl px-8 py-10 flex flex-col items-center">
-            <h1 className="mb-4 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-emerald-500 text-center tracking-tight">
+            <h1 className="mb-4 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 text-center tracking-tight">
               Track Your Order
             </h1>
             <p className="mb-8 text-lg text-slate-700 text-center">
@@ -98,7 +98,7 @@ export default function OrderStatusPage() {
               </div>
               <button
                 type="submit"
-                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-700 px-6 py-3 text-white font-bold shadow-lg rounded-xl text-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-500 hover:to-blue-700 px-6 py-3 text-white font-bold shadow-lg rounded-xl text-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
                 disabled={loading}
               >
                 <FaSearch size={18} />
@@ -126,7 +126,7 @@ export default function OrderStatusPage() {
         )}
 
         {order && !loading && (
-          <div className="w-full max-w-3xl mx-auto bg-white/95 rounded-2xl shadow-xl border border-slate-200 mt-5 mb-16">
+          <div className="w-full w-3xl mx-auto bg-white/95 rounded-2xl shadow-xl border border-slate-200 mt-5 mb-16">
             <div className="p-8">
               {/* Modern top summary */}
               <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-stretch gap-6 p-6 rounded-xl">
@@ -265,7 +265,7 @@ export default function OrderStatusPage() {
                       </span>
                     </div>
                     <div className="flex flex-col w-fit min-w-max">
-                      <span className="flex items-center gap-1 font-mono text-xs text-slate-700 break-all">
+                      <span className="flex items-center gap-1 font-mono text-sm text-slate-700 break-all">
                         <span title="Address">
                           <svg
                             className="inline mr-1 text-slate-400"

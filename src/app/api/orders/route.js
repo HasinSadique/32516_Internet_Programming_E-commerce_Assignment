@@ -72,9 +72,7 @@ export async function GET(request) {
         console.error("Error fetching orders:", error);
         return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 }, );
     }
-}
-
-// export async function PATCH(request, { params }) {
+} // export async function PATCH(request, { params }) {
 //     try {
 //         const { orderId  } = await params;
 //         const { status } = await request.json();
