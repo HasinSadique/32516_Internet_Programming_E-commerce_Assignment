@@ -1,10 +1,10 @@
 import ProductCard from "./ProductCard";
 
-export default function ProductGrid({ products }) {
+export default function ProductGrid({ products, emptyMessage }) {
   if (!products?.length) {
     return (
       <div className="py-16 text-center text-slate-500">
-        <p>No products found.</p>
+        <p>{emptyMessage ?? "No products found."}</p>
       </div>
     );
   }

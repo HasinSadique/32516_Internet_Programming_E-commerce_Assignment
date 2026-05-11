@@ -55,6 +55,10 @@ export default async function Homepage() {
         </div>
       </section>
 
+      <section id="search">
+        <div className="mb-5 flex items-end justify-between gap-4"></div>
+      </section>
+
       <section>
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
