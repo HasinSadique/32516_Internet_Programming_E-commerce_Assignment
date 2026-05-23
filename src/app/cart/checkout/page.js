@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import Link from "next/link";
 
@@ -18,6 +18,46 @@ export default function CheckoutPage() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const [orderId, setOrderId] = useState(null);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function prefillCustomerDetails() {
+      try {
+        const response = await fetch("/api/customer/session", {
+          cache: "no-store",
+        });
+
+        if (!response.ok || !isActive) {
+          return;
+        }
+
+        const payload = await response.json();
+        const user = payload?.user;
+        if (!user) {
+          return;
+        }
+
+        setForm((current) => ({
+          ...current,
+          name: user.fullName || current.name,
+          address: user.address
+            ? `${user.address}${user.postalCode ? `, ${user.postalCode}` : ""}`
+            : current.address,
+          phone: user.phone || current.phone,
+          email: user.email || current.email,
+        }));
+      } catch (error) {
+        console.error("Failed to load customer profile for checkout:", error);
+      }
+    }
+
+    prefillCustomerDetails();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   const FALLBACK_IMAGE = "https://placehold.co/64x64?text=No+Image";
 
@@ -188,8 +228,8 @@ export default function CheckoutPage() {
             <h1 className="text-3xl font-bold mb-7 text-slate-900">
               Customer Information
               <p className="mt-1 text-xs italic text-slate-500">
-                We do not require our customers to create an account or register
-                with us.
+                Your account details are pre-filled below. You can update them
+                for this order if needed.
               </p>
             </h1>
 

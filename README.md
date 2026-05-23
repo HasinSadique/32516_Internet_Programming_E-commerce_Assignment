@@ -4,10 +4,19 @@
 
 AutoTech Solutions is an online e-commerce website where customers can buy automotive electronics such as speakers, dashcams, and stereo monitors like android players and tesla style players. Before this website, the shop handled many customer orders and records on paper. Because of too much paperwork and human mistakes, the business needed an online solution. This website helps reduce errors and paperwork by letting customers order products directly for cash on delivery.
 
+## Environment Variables
+
+Add these to `.env.local`:
+
+- `MONGODB_URI` — MongoDB connection string
+- `MONGODB_DB` — Database name
+- `JWT_SECRET` — Secret used to sign customer JWT session tokens (required in production)
+
 ## Technical Stack
 
 - **Frontend:** Nextjs Reactjs
 - **Database:** MongoDB
+- **Customer Auth:** Bcrypt password hashing + JWT sessions (httpOnly cookie)
 - **Styling:** Tailwind CSS
 - **Routing:** Nextjs App Router
 - **Data:** Products and Orders are stored on MongoDB

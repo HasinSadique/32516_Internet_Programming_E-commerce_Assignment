@@ -53,6 +53,18 @@ export default function Footer() {
           >
             Order Status
           </Link>
+          <Link
+            href="/login"
+            className="text-sky-200 hover:text-white transition font-semibold"
+          >
+            Login
+          </Link>
+          {/* <Link
+            href="/register"
+            className="text-sky-200 hover:text-white transition font-semibold"
+          >
+            Register
+          </Link> */}
         </div>
         <div className="mt-2 flex justify-center">
           <Link

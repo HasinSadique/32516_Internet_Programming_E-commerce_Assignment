@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X } from "lucide-react"; // Modern icon library
+import { Menu, X } from "lucide-react";
+import CustomerAuthNav from "@/components/auth/CustomerAuthNav";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -64,6 +65,7 @@ export default function Header() {
               </Link>
             );
           })}
+          <CustomerAuthNav />
         </nav>
 
         {/* Mobile Hamburger */}
@@ -101,6 +103,9 @@ export default function Header() {
                 </li>
               );
             })}
+            <li className="flex flex-wrap items-center gap-2 pb-2">
+              <CustomerAuthNav onNavigate={() => setMenuOpen(false)} />
+            </li>
           </ul>
         </nav>
       )}

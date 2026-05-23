@@ -8,7 +8,7 @@ function pickFeaturedProducts(products) {
   if (!products.length) return [];
 
   const featured = products.filter((product) => product.featured);
-  return (featured.length ? featured : products).slice(0, 4);
+  return (featured.length ? featured : products).slice(0, 8); //set how many featured products to display.
 }
 
 export default async function Homepage() {
