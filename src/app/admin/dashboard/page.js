@@ -84,8 +84,8 @@ export default async function AdminPage() {
           </p>
         </div>
       </div>
-      {/* Manage products and orders links */}
-      <div className="mb-6 grid gap-6 sm:grid-cols-2">
+      {/* Manage products, orders, and customers links */}
+      <div className="mb-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <Link
           href="/admin/dashboard/products"
           className="block rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-blue-300 hover:shadow-md"
@@ -107,6 +107,18 @@ export default async function AdminPage() {
           </h2>
           <p className="mt-2 text-sm text-slate-600">
             Review customer orders and update fulfillment status from one place.
+          </p>
+        </Link>
+        <Link
+          href="/admin/dashboard/customers"
+          className="block rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-blue-300 hover:shadow-md"
+        >
+          <h2 className="text-lg font-semibold text-slate-900">
+            Manage Customers
+          </h2>
+          <p className="mt-2 text-sm text-slate-600">
+            View customer profiles and delete accounts so customers can
+            re-register.
           </p>
         </Link>
       </div>

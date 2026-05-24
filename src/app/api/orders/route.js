@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection } from "@/lib/mongodb";
 import { getAdminSessionFromRequest } from "@/lib/auth/adminSession";
+import { getCustomerSessionFromRequest } from "@/lib/auth/customerSession";
 
 // Generate a unique order ID
 function generateOrderId() {
@@ -39,12 +40,21 @@ function requireAdminApiSession(request) {
 export async function POST(request) {
     try {
         const payload = await request.json();
+        const customerSession = await getCustomerSessionFromRequest(request);
+        if (!customerSession?.customerId) {
+            return NextResponse.json(
+                { error: "Please login before placing an order." },
+                { status: 401 },
+            );
+        }
         console.log("Got order payload ===> ", payload);
         const { data, error } = sanitizeOrderPayload(payload);
         console.log("Got order data ===> ", data);
         if (error) {
             return NextResponse.json({ error }, { status: 400 });
         }
+
+        data.customerId = customerSession.customerId;
 
         const ordersCollection = await getCollection("orders");
         const result = await ordersCollection.insertOne(data);

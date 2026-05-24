@@ -61,6 +61,34 @@ export default function CheckoutPage() {
 
   const FALLBACK_IMAGE = "https://placehold.co/64x64?text=No+Image";
 
+  if (submitted) {
+    return (
+      <div className="container mx-auto px-4 py-16 text-center">
+        <h1 className="mb-4 text-3xl font-bold text-green-700">Thank You!</h1>
+        <p className="mb-4 text-slate-700">
+          {orderId ? (
+            <>
+              Order placed successfully. Your order ID is{" "}
+              <strong>{orderId}</strong>. <br /> You will receive an email
+              shortly. Thank you.
+            </>
+          ) : (
+            <>
+              Order placed successfully. You will receive an email shortly.
+              Thank you.
+            </>
+          )}
+        </p>
+        <Link
+          href="/products"
+          className="inline-flex rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white transition-colors hover:bg-blue-700"
+        >
+          Continue Shopping
+        </Link>
+      </div>
+    );
+  }
+
   if (!items || items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -105,13 +133,13 @@ export default function CheckoutPage() {
     setErrors({});
     const id = await submitOrder();
     if (id) {
-      console.log("Order placed successfully. Order ID:", id);
+      clearCart();
       setOrderId(id);
       setSubmitted(true);
-      //   clearCart();
       setIsSubmitting(false);
     } else {
       setErrors({ order: "Failed to place order" });
+      setIsSubmitting(false);
     }
   }
 
@@ -149,40 +177,16 @@ export default function CheckoutPage() {
         const data = await res.json();
         return data.orderId || null;
       }
+      if (res.status === 401) {
+        setErrors({
+          order: "Please login to place an order and save it to your account.",
+        });
+      }
       return null;
     } catch (e) {
       console.error("Order submission failed:", e);
       return null;
     }
-  }
-
-  if (submitted) {
-    return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="mb-4 text-3xl font-bold text-green-700">Thank You!</h1>
-        <p className="mb-4 text-slate-700">
-          {orderId ? (
-            <>
-              Order placed successfully. Your order ID is{" "}
-              <strong>{orderId}</strong>. <br /> You will receive an email
-              shortly. Thank you.
-            </>
-          ) : (
-            <>
-              Order placed successfully. You will receive an email shortly.
-              Thank you.
-            </>
-          )}
-        </p>
-        <Link
-          onClick={() => clearCart()}
-          href="/products"
-          className="inline-flex rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white transition-colors hover:bg-blue-700"
-        >
-          Continue Shopping
-        </Link>
-      </div>
-    );
   }
 
   return (
@@ -356,6 +360,11 @@ export default function CheckoutPage() {
             >
               {isSubmitting ? "Placing Order..." : "Place Order"}
             </button>
+            {errors.order && (
+              <p className="mt-3 text-center text-sm font-medium text-red-600">
+                {errors.order}
+              </p>
+            )}
           </form>
         </div>
       </div>

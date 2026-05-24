@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 const inputClassName =
   "w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500";
@@ -24,7 +23,6 @@ export default function CustomerRegisterPage() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
-  const router = useRouter();
   const [redirectTo, setRedirectTo] = useState("/");
 
   useEffect(() => {
@@ -42,8 +40,7 @@ export default function CustomerRegisterPage() {
         });
 
         if (response.ok) {
-          router.replace(redirectTo);
-          router.refresh();
+          window.location.assign(redirectTo);
           return;
         }
       } catch (sessionError) {
@@ -60,7 +57,7 @@ export default function CustomerRegisterPage() {
     return () => {
       isActive = false;
     };
-  }, [router, redirectTo]);
+  }, [redirectTo]);
 
   function updateField(field, value) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -100,8 +97,8 @@ export default function CustomerRegisterPage() {
         return;
       }
 
-      router.replace(redirectTo);
-      router.refresh();
+      window.location.assign(redirectTo);
+      return;
     } catch {
       setError("Unable to register right now. Please try again.");
     } finally {

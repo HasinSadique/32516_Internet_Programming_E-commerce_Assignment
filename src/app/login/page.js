@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 const inputClassName =
   "w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500";
@@ -14,7 +13,6 @@ export default function CustomerLoginPage() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
-  const router = useRouter();
   const [redirectTo, setRedirectTo] = useState("/");
 
   useEffect(() => {
@@ -32,8 +30,7 @@ export default function CustomerLoginPage() {
         });
 
         if (response.ok) {
-          router.replace(redirectTo);
-          router.refresh();
+          window.location.assign(redirectTo);
           return;
         }
       } catch (sessionError) {
@@ -50,7 +47,7 @@ export default function CustomerLoginPage() {
     return () => {
       isActive = false;
     };
-  }, [router, redirectTo]);
+  }, [redirectTo]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -80,8 +77,8 @@ export default function CustomerLoginPage() {
         return;
       }
 
-      router.replace(redirectTo);
-      router.refresh();
+      window.location.assign(redirectTo);
+      return;
     } catch {
       setError("Unable to login right now. Please try again.");
     } finally {
