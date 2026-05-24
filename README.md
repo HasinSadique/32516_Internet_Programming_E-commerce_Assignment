@@ -23,9 +23,9 @@ AutoTech Solutions is an online e-commerce platform offering automotive electron
 3. **Configure environment variables:**
    - Create a `.env.local` file in the root and add:
      ```
-     MONGODB_URI=Added in comments
-     MONGODB_DB=Added in comments
-     JWT_SECRET=Added in comments
+     MONGODB_URI = Added in canvas submission comments
+     MONGODB_DB = Added in canvas submission comments
+     JWT_SECRET = Added in canvas submission comments
      ```
 
 4. **Run the development server:**
