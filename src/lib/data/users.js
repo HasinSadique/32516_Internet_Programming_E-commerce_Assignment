@@ -57,6 +57,28 @@ export function toPublicCustomer(customer) {
   };
 }
 
+export async function updateCustomerProfile(id, updates) {
+  if (!ObjectId.isValid(id)) {
+    return null;
+  }
+
+  const collection = await getCollection(CUSTOMERS_COLLECTION);
+  const result = await collection.findOneAndUpdate(
+    { _id: new ObjectId(id) },
+    {
+      $set: {
+        address: updates.address,
+        postalCode: updates.postalCode,
+        phone: updates.phone,
+        updatedAt: new Date(),
+      },
+    },
+    { returnDocument: "after" },
+  );
+
+  return result ?? null;
+}
+
 export async function getAllCustomers() {
   const collection = await getCollection(CUSTOMERS_COLLECTION);
   const customers = await collection

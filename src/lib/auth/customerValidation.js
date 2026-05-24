@@ -87,3 +87,30 @@ export function validateLoginPayload(body) {
 
   return { errors, values: { email, password } };
 }
+
+export function validateProfileUpdatePayload(body) {
+  const errors = {};
+
+  const address = String(body?.address ?? "").trim();
+  const postalCode = String(body?.postalCode ?? "").trim();
+  const phone = String(body?.phone ?? "").trim();
+
+  if (!address) {
+    errors.address = "Address is required.";
+  }
+
+  if (!postalCode) {
+    errors.postalCode = "Postal code is required.";
+  }
+
+  if (!phone) {
+    errors.phone = "Phone number is required.";
+  } else if (!PHONE_PATTERN.test(phone)) {
+    errors.phone = "Enter a valid phone number.";
+  }
+
+  return {
+    errors,
+    values: { address, postalCode, phone },
+  };
+}

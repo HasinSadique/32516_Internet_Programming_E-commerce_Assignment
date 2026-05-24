@@ -70,11 +70,19 @@ export default function AdminOrdersPanel({ initialOrders }) {
   const filteredOrders = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
     return orders.filter((order) => {
+      const customer =
+        order.customer && typeof order.customer === "object"
+          ? order.customer
+          : {};
+      const orderId = String(order.orderId ?? order._id ?? "").toLowerCase();
+      const customerName = String(customer.name ?? "").toLowerCase();
+      const customerEmail = String(customer.email ?? "").toLowerCase();
+
       const queryMatch =
         !query ||
-        order.orderId.toLowerCase().includes(query) ||
-        order.customerName.toLowerCase().includes(query) ||
-        order.customerEmail.toLowerCase().includes(query);
+        orderId.includes(query) ||
+        customerName.includes(query) ||
+        customerEmail.includes(query);
 
       if (!queryMatch) return false;
       if (statusFilter === "all") return true;
