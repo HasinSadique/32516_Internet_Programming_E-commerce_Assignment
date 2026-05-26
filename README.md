@@ -25,6 +25,8 @@ AutoTech Solutions is an online e-commerce platform offering automotive electron
      ```
      MONGODB_URI = Added in canvas submission comments
      MONGODB_DB = Added in canvas submission comments
+     ADMIN_USERNAME = Added in canvas submission comments
+     ADMIN_PASSWORD = Added in canvas submission comments
      JWT_SECRET = Added in canvas submission comments
      ```
 
